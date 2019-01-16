@@ -8,11 +8,14 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -y && apt-get install -y \
     openssh-server curl gitolite3 libltdl-dev locales tzdata 
      
-RUN locale-gen en_US.UTF-8 ; mkdir -p /var/run/sshd
-ENV LANG       en_US.UTF-8
-ENV LC_ALL	   "C.UTF-8"
-ENV LANGUAGE   en_US:en
+RUN locale-gen en_US.UTF-8 zh_CN.UTF-8 ; mkdir -p /var/run/sshd
 
+ENV LANG en_US.UTF-8
+RUN { \
+        echo "LANG=$LANG"; \
+        echo "LANGUAGE=$LANG"; \
+        echo "LC_ALL=$LANG"; \
+} > /etc/default/locale
 RUN useradd -ms /bin/bash david && usermod -aG sudo david \
     && adduser --system --shell /bin/bash --group --disabled-password --home /home/git git
 RUN echo 'david:freego' | chpasswd ; echo 'root:freego_2019' | chpasswd

@@ -6,15 +6,15 @@ LABEL maintainer="David <david@cninone.com>"
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -y && apt-get install -y \
-    openssh-server curl gitolite3 libltdl-dev locales \
-    && locale-gen en_US.UTF-8 \
-    && mkdir -p /var/run/sshd
-    
+    openssh-server curl gitolite3 libltdl-dev locales tzdata 
+     
+RUN locale-gen en_US.UTF-8 ; mkdir -p /var/run/sshd
 ENV LANG       en_US.UTF-8
 ENV LC_ALL	   "C.UTF-8"
 ENV LANGUAGE   en_US:en
 
-RUN useradd -ms /bin/bash david && usermod -aG sudo david
+RUN useradd -ms /bin/bash david && usermod -aG sudo david \
+    && adduser --system --shell /bin/bash --group --disabled-password --home /home/git git
 RUN echo 'david:freego' | chpasswd ; echo 'root:freego_2019' | chpasswd
 # RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
@@ -25,7 +25,7 @@ ENV TZ=Asia/Chongqing
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 COPY init.sh /
-
+COPY id_rsa.pub /id_rsa.pub
 
 EXPOSE 22
 

@@ -9,8 +9,10 @@ RUN apt-get update -y && apt-get install -y \
     openssh-server curl gitolite3 libltdl-dev locales tzdata 
      
 RUN locale-gen en_US.UTF-8 zh_CN.UTF-8 ; mkdir -p /var/run/sshd
-
+RUN curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
+        && chmod +x /usr/local/bin/docker-compose
 ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
 RUN { \
         echo "LANG=$LANG"; \
         echo "LANGUAGE=$LANG"; \

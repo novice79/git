@@ -28,9 +28,10 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 
 ENV TZ=Asia/Chongqing
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
+RUN sed -i '/LOCAL_CODE.*GL_ADMIN_BASE/s/^\s*#//g' /home/git/.gitolite.rc ; \
+    sed -i '/repo-specific-hooks/s/^\s*#//g' /home/git/.gitolite.rc
 COPY init.sh /
-COPY id_rsa.pub /id_rsa.pub
+COPY id_rsa.pub /david.pub
 
 EXPOSE 22
 

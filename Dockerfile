@@ -20,7 +20,8 @@ RUN { \
 } > /etc/default/locale
 RUN useradd -ms /bin/bash david && usermod -aG sudo david \
     && adduser --system --shell /bin/bash --group --disabled-password --home /home/git git
-RUN echo 'david:freego' | chpasswd ; echo 'root:freego_2019' | chpasswd
+RUN echo 'david:freego' | chpasswd ; echo 'root:freego_2019' | chpasswd ; \
+    groupadd docker -g 999 && usermod -aG docker git
 # RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # SSH login fix. Otherwise user is kicked off after login

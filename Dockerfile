@@ -34,6 +34,6 @@ COPY id_rsa.pub /david.pub
 
 EXPOSE 22
 
-USER git
-RUN mkdir /home/git/publish
+# USER git
+RUN sudo -u git mkdir /home/git/publish
 ENTRYPOINT ["/init.sh"]

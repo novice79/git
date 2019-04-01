@@ -6,7 +6,7 @@ LABEL maintainer="David <david@cninone.com>"
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -y && apt-get install -y \
-    openssh-server curl gitolite3 libltdl-dev locales tzdata 
+    openssh-server curl gitolite3 libltdl-dev locales tzdata sudo
      
 RUN locale-gen en_US.UTF-8 zh_CN.UTF-8 ; mkdir -p /var/run/sshd
 RUN curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
@@ -34,4 +34,6 @@ COPY id_rsa.pub /david.pub
 
 EXPOSE 22
 
+USER git
+RUN mkdir /home/git/publish
 ENTRYPOINT ["/init.sh"]

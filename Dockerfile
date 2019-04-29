@@ -18,9 +18,10 @@ RUN { \
         echo "LANGUAGE=$LANG"; \
         echo "LC_ALL=$LANG"; \
 } > /etc/default/locale
+# or adduser --system --shell /bin/bash --uid 777 --gid 65534 --disabled-password --home /home/git git
 # or adduser --system --shell /bin/bash --uid 777 --group --disabled-password --home /home/git git
 RUN useradd -ms /bin/bash david && usermod -aG sudo david \
-    && adduser --system --shell /bin/bash --uid 777 --gid 65534 --disabled-password --home /home/git git
+    && adduser --system --shell /bin/bash --uid 777 --group --disabled-password --home /home/git git
 RUN echo 'david:freego' | chpasswd ; echo 'root:freego_2019' | chpasswd ; \
     groupadd docker -g 999 && usermod -aG docker git
 # RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config

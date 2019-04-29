@@ -20,7 +20,7 @@ EOT
 GTPATH="/home/git/.gitolite"
 # if [ ! -f $php_index ]; then
 if [ ! -d "$GTPATH" ]; then
-  chown git:65534 /home/git
+  chown git:git /home/git
   su - git -c "gitolite setup -pk /david.pub"
   sed -i '/LOCAL_CODE.*GL_ADMIN_BASE/s/^\s*#//g' /home/git/.gitolite.rc 
   sed -i '/repo-specific-hooks/s/^\s*#//g' /home/git/.gitolite.rc

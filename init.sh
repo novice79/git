@@ -24,6 +24,16 @@ if [ ! -d "$GTPATH" ]; then
   su - git -c "gitolite setup -pk /david.pub"
   sed -i '/LOCAL_CODE.*GL_ADMIN_BASE/s/^\s*#//g' /home/git/.gitolite.rc 
   sed -i '/repo-specific-hooks/s/^\s*#//g' /home/git/.gitolite.rc
+  # # change repo gitolite-admin to git-admin
+  # mv /home/git/repositories/git{olite,}-admin.git
+  # sed -i 's/gitolite-admin/git-admin/' /home/git/repositories/git-admin.git/gl-conf
+  # sed -i 's/gitolite-admin/git-admin/' /home/git/.gitolite/conf/gitolite.conf
+  # sed -i 's/gitolite-admin/git-admin/' /home/git/.gitolite/conf/gitolite.conf-compiled.pm
+  # # todo: after clone git-admin, change git-admin/conf/gitolite.conf gitolite-admin to git-admin and push
+  # su - git -c "git config --global user.email git@`hostname` && git config --global user.name `hostname`"
+  # # can not commit and change gitolite-admin, because it's restricted by keypair
+  # su - git -c "git clone /home/git/repositories/git-admin /tmp/ga && cd /tmp/ga && sed -i 's/gitolite-admin/git-admin/' conf/gitolite.conf && git commit -am 'change to git-admin' && git push"
+
 fi
 
 /usr/sbin/sshd -D
